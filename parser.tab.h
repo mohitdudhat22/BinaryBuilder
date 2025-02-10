@@ -35,8 +35,9 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_TAB_H_INCLUDED
-# define YY_YY_PARSER_TAB_H_INCLUDED
+#ifndef YY_PARSER_TAB_H
+#define YY_PARSER_TAB_H
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,38 +46,48 @@
 extern int yydebug;
 #endif
 
-/* Token kinds.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    NUMBER = 258,                  /* NUMBER  */
-    PLUS = 259,                    /* PLUS  */
-    MINUS = 260,                   /* MINUS  */
-    MUL = 261,                     /* MUL  */
-    DIV = 262,                     /* DIV  */
-    LPAREN = 263,                  /* LPAREN  */
-    RPAREN = 264                   /* RPAREN  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
-#endif
+/* Token definitions
+
+   The following definitions are used by the parser to identify the
+   different kinds of tokens.  They are used in the parser's
+   translation table.  */
+
+#define NUMBER      258
+#define IDENTIFIER  259
+#define STRING      260
+#define PLUS        261
+#define MINUS       262
+#define MUL         263
+#define DIV         264
+#define ASSIGN      265
+#define EQ          266
+#define NEQ         267
+#define LT          268
+#define GT          269
+#define LTE         270
+#define GTE         271
+#define IF          272
+#define ELSE        273
+#define WHILE       274
+#define PRINT       275
+#define LPAREN      276
+#define RPAREN      277
+#define LBRACE      278
+#define RBRACE      279
+#define SEMICOLON   280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union {
+    int number;
+    char *string;
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
-
 extern YYSTYPE yylval;
-
 
 int yyparse (void);
 
-
-#endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_PARSER_TAB_H  */
